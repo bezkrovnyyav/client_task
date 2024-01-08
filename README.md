@@ -18,12 +18,28 @@
 
 **3.** Install dependencies:
 
-    pip install -r requirements.txt
+    pip install -r requirements_dev.txt
 
 **4.** Start the app:
 
-    python client.py
+    python main.py
 
-**5.** Run linter:
+# Instructions for testing the project
+
+**1.** Clone the repository:
+
+    git clone https://github.com/bezkrovnyyav/client_task.git
+   
+**2.** Create a virtual environment and activate it in Windows:
+
+    cd client_task
+    python -m venv env
+    env\Scripts\activate
+
+**3.** Install dependencies:
+
+    pip install -r requirements_test.txt
+
+**4.** Run linter:
 
     flake8 .

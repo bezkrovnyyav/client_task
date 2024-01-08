@@ -1,69 +1,40 @@
 """
-Module requests is used for get date from url.
-
 Typing module is used to support type annotations in code.
+
+Module APIClient is a base class for making API requests..
 """
 from typing import Any, Dict, List, Union
 
-import requests
+from api_client import APIClient
 
 
 class JSONPlaceholderClient(object):
     """Provides an interface for working with the JSONPlaceholder API and saving the resulting data locally."""
 
-    base_url: str = 'https://jsonplaceholder.typicode.com'
-
-    def __init__(self) -> None:
+    def __init__(self, api_client: APIClient) -> None:
         """
-        Initialize JSONPlaceholderClient with api_response param.
+        Initialize JSONPlaceholderClient with api_client parameter.
 
-        :param api_response: dictionary to store the API response
-        :type api_response: Dict
+        Args:
+            api_client(APIClient): an instance of the APIClient.
         """
+        self.api_client = api_client
         self.api_response: Dict[str, Any] = {}
 
     def get_posts(self) -> None:
         """Get post data with JSONPlaceholder API."""
-        response = requests.get(f'{self.base_url}/posts', timeout=3)
-        http_success_code = 200
-        if response.status_code == http_success_code:
-            self.api_response['posts'] = response.json()
-        else:
-            print('Failed to fetch posts')
+        self.api_response['posts'] = self.api_client.make_request('posts')
 
     def get_comments(self) -> None:
-        """Send a request to the API to get a list of posts."""
-        response = requests.get(f'{self.base_url}/comments', timeout=3)
-        http_success_code = 200
-        if response.status_code == http_success_code:
-            self.api_response['comments'] = response.json()
-        else:
-            print('Failed to fetch comments')
+        """Send a request to the API to get a list of comments."""
+        self.api_response['comments'] = self.api_client.make_request('comments')
 
     def save_data_locally(self, key: str, response_data: Union[List, Dict]) -> None:
         """
         Save response data locally using a provided key.
 
         Args:
-            key (str): The key to identify the response data.
-            response_data (Union[List, Dict]): The data retrieved from the API response.
+            key (str): The key to save the response data.
+            response_data (Union[List, Dict]): Data to be saved, can be a list or a dictionary.
         """
         self.api_response[key] = response_data
-
-
-if __name__ == '__main__':
-    # Creating a JSONPlaceholderClient Instance
-    client: JSONPlaceholderClient = JSONPlaceholderClient()
-
-    # Receiving posts and comments
-    client.get_posts()
-    client.get_comments()
-
-    # Saving values locally
-    sample_data: Dict[str, str] = {'example_key': 'example_value'}
-    client.save_data_locally('sample_data', sample_data)
-
-    # Displaying the results of posts and comments
-    print('Post: ', client.api_response.get('posts')[0], '\n')
-
-    print('Comment: ', client.api_response.get('comments')[0])
