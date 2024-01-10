@@ -22,7 +22,11 @@
 
 **4.** Start the app:
 
-    python main.py
+    python scr\client\main.py
+
+**5.** Create a distribution:
+
+    python scr\setup.py sdist
 
 # Instructions for testing the project
 

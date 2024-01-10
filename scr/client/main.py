@@ -12,7 +12,8 @@ from local_storage import LocalDataStorage
 
 if __name__ == '__main__':
     # Creating an instance of the APIClient
-    api_client = APIClient(base_url='https://jsonplaceholder.typicode.com')
+    fake_api_key = 'custome_fake_api_key'  # Replace with your fake API key
+    api_client = APIClient(base_url='https://jsonplaceholder.typicode.com', api_key=fake_api_key)
 
     # Creating instances of JSONPlaceholderClient and LocalDataStorage
     json_client = JSONPlaceholderClient(api_client=api_client)
